@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gitlab/git"
 	"os"
 
 	"github.com/urfave/cli/v2"
@@ -18,6 +19,7 @@ func main() {
 			Usage: "show gitlab version",
 			Action: func(c *cli.Context) error {
 				fmt.Println("v0.1.0")
+				git.CurrentRepoHost()
 				return nil
 			},
 		},
