@@ -10,9 +10,21 @@ import (
 
 // Config Gitlab CLI Config
 type Config struct {
-	Token     string
-	Host      string
-	WorkSpace string
+	Token string
+	Host  string
+}
+
+var instance *Config
+
+// Shared gitlab配置
+func Shared() *Config {
+	if instance == nil {
+		instance = fetchConfig()
+		if instance == nil {
+			instance = &Config{}
+		}
+	}
+	return instance
 }
 
 var configName = "config.json"
@@ -20,6 +32,18 @@ var configPath = "/usr/local/share/cinema/gitlab"
 
 func init() {
 
+}
+
+// Update 更新配置信息
+func (config *Config) Update() error {
+	if config == nil {
+		//TODO: log config is nil
+		return nil
+	}
+	infoJSON, _ := json.Marshal(config)
+	filePath := path.Join(configPath, configName)
+	write(infoJSON, filePath)
+	return nil
 }
 
 func fetchConfig() *Config {
@@ -51,18 +75,6 @@ func fetchConfig() *Config {
 func initDefault() *Config {
 	config := Config{}
 	return &config
-}
-
-// UpdateConfig 更新配置
-func UpdateConfig(config *Config) error {
-	if config == nil {
-		//TODO: log config is nil
-		return nil
-	}
-	infoJSON, _ := json.Marshal(config)
-	filePath := path.Join(config.WorkSpace, configName)
-	write(infoJSON, filePath)
-	return nil
 }
 
 func write(json []byte, filePath string) {

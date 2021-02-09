@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gitlab/git"
+	"gitlab/command"
+	"gitlab/project"
 	"os"
 
 	"github.com/urfave/cli/v2"
@@ -14,6 +15,7 @@ func main() {
 	app.Version = "0.1.0"
 	app.Usage = "gl <command> <subcommand> [flags]"
 	app.Commands = []*cli.Command{
+		command.ConfigCommand(),
 		{
 			Name:  "version",
 			Usage: "show gitlab version",
