@@ -16,6 +16,7 @@ func main() {
 	app.Usage = "gl <command> <subcommand> [flags]"
 	app.Commands = []*cli.Command{
 		command.ConfigCommand(),
+		command.ProjectCommand(),
 		{
 			Name:  "version",
 			Usage: "show gitlab version",
